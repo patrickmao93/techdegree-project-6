@@ -113,7 +113,7 @@ button:hover {
   animation-name: giggle;
 }
 
-.show_wrong {
+.show--wrong {
   color: white;
   background-color: rgb(206, 81, 81);
   animation-duration: 0.5s;
@@ -171,6 +171,7 @@ button:disabled {
   border-radius: 5px;
   transition: 0.5s ease;
   overflow: hidden;
+  z-index: 1000;
 }
 
 .title {

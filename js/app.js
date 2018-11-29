@@ -1,13 +1,13 @@
 const phrases = [
     {phrase: 'what is on your mind', winSubtitle: "What's on your mind was what's on your mind!", loseSubtitle: "What's on your mind was not what's on your mind :("}, 
-    {phrase: 'you are a murloc', winSubtitle: "\"MmmRRRRRRGGL\"", loseTitle: "\"MmmRRRRRRGGL?\""}, 
-    {phrase: 'javascript for the win', winSubtitle: "ES6 makes it better", loseTitle: "...or this game wouldn't exist"}, 
+    {phrase: 'you are a murloc', winSubtitle: "\"MmmRRRRRRGGL\"", loseSubtitle: "\"MmmRRRRRRGGL?\""}, 
+    {phrase: 'javascript for the win', winSubtitle: "ES6 makes it better", loseSubtitle: "...or this game wouldn't exist"}, 
     {phrase: 'php is the best', winSubtitle: "...language to not use", loseSubtitle: "...language to not use"}, 
-    {phrase: 'magikarp used splash', winSubtitle: "\"It was super effective!\"", loseTitle: "\"But nothing happened\""}
+    {phrase: 'magikarp used splash', winSubtitle: "\"It was super effective!\"", loseSubtitle: "\"But nothing happened\""}
 ];
 
 let misses = 0;
-let currentPhrase = '';
+let currentPhrase;
 
 function getRandomPhraseAsArray(phrases) {
     currentPhrase = Math.floor(Math.random() * 5);
@@ -37,6 +37,8 @@ function displayEndOverlay(winStatus) {
     }
 
     const ul = document.querySelector('#phrase ul');
+    const newUl = ul.cloneNode(true);
+    console.log(newUl);
     const overlay = document.querySelector('#overlay');
     const header = document.querySelector('h2.title');
     const subtitle = document.querySelector('h2.subtitle');
@@ -54,13 +56,16 @@ function displayEndOverlay(winStatus) {
     }
 
     overlay.style.bottom = 0;
-    const lis = ul.children;
+    const lis = newUl.children;
     for (let li of lis) {
         if (!li.classList.contains('show')) {
-            li.classList.add('show_wrong');
+            li.classList.add('show--wrong');
         }
     }
-    overlay.insertBefore(ul, subtitle);
+
+    overlay.insertBefore(newUl, subtitle);
+
+    button.textContent = 'Play Again';
 }
 
 function hpMinusOne() {
@@ -99,17 +104,20 @@ function checkWin(misses) {
     const numCorrects = document.querySelectorAll('.show').length;
     const numLetters = document.querySelectorAll('.letter').length;
     if (misses >= 5) { //lose
-        displayEndOverlay('lose')
+        displayEndOverlay('lose');
     } else if (numCorrects === numLetters) { //win
         displayEndOverlay('win');
     }
 }
 
-
 //add click event listener to start button
 const resetBtn = document.querySelector('.btn__reset');
 const overlay = document.querySelector('#overlay');
 resetBtn.addEventListener('click', e => {
+    const button = e.target;
+    if (button.textContent !== 'Start Game') {
+        location.reload();
+    }
     //generate phrase
     const phrase = getRandomPhraseAsArray(phrases);
     addPhraseToDisplay(phrase);
@@ -119,19 +127,20 @@ resetBtn.addEventListener('click', e => {
 
 //add click event listener to keyboard
 const keyboard = document.querySelector('#qwerty');
-keyboard.addEventListener('click', e => {
-    let letter = e.target.textContent;
-    const match = checkLetter(letter);
-    if (match) {
-        //if found a match, add class .chosen
-        e.target.classList.add('chosen');
-    } else {
-        //else, disabe the button
-        e.target.disabled = true;
+keyboard.addEventListener('click', e => {    
+    if (e.target.tagName === 'BUTTON') {
+        let letter = e.target.textContent;
+        const match = checkLetter(letter);
+        if (match) {
+            //if found a match, add class .chosen
+            e.target.classList.add('chosen');
+        } else {
+            //else, disabe the button
+            e.target.disabled = true;
+        }
+        //check win status
+        checkWin(misses);
     }
-
-    //check win status
-    checkWin(misses);
 });
 
 

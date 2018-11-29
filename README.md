@@ -16,9 +16,9 @@ I also digged into css animation a little bit in this project, and found it incr
 - A fully functional game as described in instruction. Javascript is used to make game mechanics work.
 
 ## Screenshots
-<details><summary>Desktop</summary>
-    <img src="" alt="desktop">
+<details><summary>Playing</summary>
+    <img src="screenshots/2" alt="playing">
 </details>
-<details><summary>Tablet</summary>
-    <img src="" alt="tablet">
+<details><summary>Ending</summary>
+    <img src="screenshots/1" alt="ending">
 </details>
