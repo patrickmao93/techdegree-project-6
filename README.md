@@ -17,8 +17,8 @@ I also digged into css animation a little bit in this project, and found it incr
 
 ## Screenshots
 <details><summary>Playing</summary>
-    <img src="screenshots/2" alt="playing">
+    <img src="screenshots/2.png" alt="playing">
 </details>
 <details><summary>Ending</summary>
-    <img src="screenshots/1" alt="ending">
+    <img src="screenshots/1.png" alt="ending">
 </details>
